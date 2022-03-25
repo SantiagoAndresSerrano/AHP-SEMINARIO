@@ -68,8 +68,8 @@ public class Usuario implements Serializable {
     @Size(min = 1, max = 16777215)
     @Column(name = "confirmation_token")
     private String confirmationToken;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
-    private Collection<Decisor> decisorCollection;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "usuario")
+    private Decisor decisor;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
     private Collection<PasswordResetToken> passwordResetTokenCollection;
     @OneToMany(mappedBy = "usuario")
@@ -106,12 +106,13 @@ public class Usuario implements Serializable {
         this.confirmationToken = confirmationToken;
     }
 
-    public Collection<Decisor> getDecisorCollection() {
-        return decisorCollection;
+
+    public Decisor getDecisor() {
+        return decisor;
     }
 
-    public void setDecisorCollection(Collection<Decisor> decisorCollection) {
-        this.decisorCollection = decisorCollection;
+    public void setDecisor(Decisor decisor) {
+        this.decisor = decisor;
     }
 
     public Collection<PasswordResetToken> getPasswordResetTokenCollection() {

@@ -20,6 +20,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import ufps.ahp.model.Decisor;
 import ufps.ahp.model.PasswordResetToken;
 import ufps.ahp.security.dto.JwtDto;
 import ufps.ahp.security.dto.LoginUsuario;
@@ -29,6 +30,7 @@ import ufps.ahp.security.model.Rol;
 import ufps.ahp.security.model.Usuario;
 import ufps.ahp.security.servicio.RolService;
 import ufps.ahp.security.servicio.UsuarioService;
+import ufps.ahp.services.DecisorService;
 import ufps.ahp.services.PasswordResetTokenService;
 import ufps.ahp.services.imp.EmailServiceImp;
 
@@ -68,6 +70,8 @@ public class AuthController {
     @Autowired
     PasswordResetTokenService passwordResetTokenService;
 
+    @Autowired
+    DecisorService decisorService;
 
     @PostMapping("/nuevo")
     public ResponseEntity<?> nuevo(@Valid @RequestBody NuevoUsuario nuevoUsuario, BindingResult bindingResult){
@@ -75,13 +79,17 @@ public class AuthController {
             return new ResponseEntity("campos mal puestos o email inválido", HttpStatus.BAD_REQUEST);
         if(usuarioService.existsByEmail(nuevoUsuario.getEmail()))
             return new ResponseEntity(("ese email ya existe"), HttpStatus.BAD_REQUEST);
+
         Usuario usuario =
                 new Usuario(nuevoUsuario.getEmail(),
                         passwordEncoder.encode(nuevoUsuario.getPassword()));
+
+
         Set<Rol> roles = new HashSet<>();
         roles.add(rolService.getByRolNombre(Rol.RolNombre.ROLE_USER).get());
         if(nuevoUsuario.getRoles().contains("admin"))
             roles.add(rolService.getByRolNombre(Rol.RolNombre.ROLE_ADMIN).get());
+
         usuario.setRoles(roles);
         usuario.setCelular(nuevoUsuario.getCelular());
         usuario.setEmail(nuevoUsuario.getEmail());
@@ -90,10 +98,14 @@ public class AuthController {
         usuario.setProfesion(nuevoUsuario.getProfesion());
         usuario.setEmail(nuevoUsuario.getEmail());
         usuario.setConfirmationToken(UUID.randomUUID().toString());
+
+        Decisor decisor = decisorService.buscarPorEmail(nuevoUsuario.getEmail()); // Busco si antes de ser usuario participo como decisor
+        if(decisor!=null){
+            usuario.setDecisor(decisor);
+        }
+
         usuarioService.guardar(usuario);
-
-
-        emailServiceImp.enviarEmail("Confirmación de cuenta",
+        emailServiceImp.enviarEmail("Confirmación de cuenta ",
                 "Te has registrado en la plataforma, por favor confirma que eres tú ingresando al siguiente enlace:"
                         +"http://localhost:8082/auth/confirmacion/"+usuario.getConfirmationToken(),
                 usuario.getEmail()
@@ -123,7 +135,7 @@ public class AuthController {
         return ResponseEntity.ok("Mensaje de recuperación enviado al correo");
     }
 
-    @GetMapping("/recuperar/{token}")
+    @GetMapping("/recuperar/{token}") //petición que recibe el backend de parte del frontend, recordar cambiar el link de la linea 131 a un URL del frontend
     public ResponseEntity<?>confirmarRecuperarPassword(@PathVariable String token){
 
         PasswordResetToken passwordResetToken = passwordResetTokenService.buscarToken(token);
