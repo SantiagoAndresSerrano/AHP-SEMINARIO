@@ -26,7 +26,7 @@ public class DecisorServiceImp implements DecisorService {
 
     @Override
     public Decisor buscarPorEmail(String email) {
-        return decisorDAO.findDecisorByEmail();
+        return decisorDAO.findDecisorByEmail(email);
     }
 
     @Override
