@@ -40,7 +40,6 @@ public class ProblemaRest {
 
     @GetMapping
     public ResponseEntity<?> listar(){
-        puntuacionCriterioServicio.agregarCriteriosPuntuacion();
         return ResponseEntity.ok(problemaService.listar());
     }
 
