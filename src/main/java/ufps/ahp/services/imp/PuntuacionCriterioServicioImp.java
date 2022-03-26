@@ -20,6 +20,11 @@ public class PuntuacionCriterioServicioImp implements PuntuacionCriterioServicio
     }
 
     @Override
+    public void agregarCriteriosPuntuacion() {
+        puntuacionCriterioDAO.llenarPuntuacionCriterio();
+    }
+
+    @Override
     public PuntuacionCriterio buscar(int idPuntuacionCriterio) {
         return puntuacionCriterioDAO.findById(idPuntuacionCriterio).orElse(null);
     }

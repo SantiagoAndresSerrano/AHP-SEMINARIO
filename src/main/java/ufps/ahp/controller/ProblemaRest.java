@@ -9,9 +9,11 @@ import org.springframework.web.bind.annotation.*;
 import ufps.ahp.model.Alternativa;
 import ufps.ahp.model.Criterio;
 import ufps.ahp.model.Problema;
+import ufps.ahp.model.PuntuacionCriterio;
 import ufps.ahp.services.AlternativaService;
 import ufps.ahp.services.CriterioService;
 import ufps.ahp.services.ProblemaService;
+import ufps.ahp.services.PuntuacionCriterioServicio;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,8 +33,14 @@ public class ProblemaRest {
     @Autowired
     AlternativaService alternativaService;
 
+    @Autowired
+    PuntuacionCriterioServicio puntuacionCriterioServicio;
+
+
+
     @GetMapping
     public ResponseEntity<?> listar(){
+        puntuacionCriterioServicio.agregarCriteriosPuntuacion();
         return ResponseEntity.ok(problemaService.listar());
     }
 
