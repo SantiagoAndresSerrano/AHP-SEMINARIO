@@ -12,7 +12,9 @@ public interface PuntuacionCriterioDAO extends JpaRepository<PuntuacionCriterio,
     @Modifying
     @Query(value =
                     "insert " +
-                            "into puntuacion_criterio (criterio1_id, criterio2_id, problema) SELECT c1.id_criterio, c2.id_criterio, c1.problema from criterio c1, criterio c2 where c1.problema = c2.problema and c1.id_criterio<=c2.id_criterio",
+                            "into puntuacion_criterio (criterio1_id, criterio2_id, problema) " +
+                            "SELECT c1.id_criterio, c2.id_criterio, c1.problema " +
+                            "from criterio c1, criterio c2 where c1.problema = c2.problema and c1.id_criterio<=c2.id_criterio",
             nativeQuery = true)
     void llenarPuntuacionCriterio();
 }

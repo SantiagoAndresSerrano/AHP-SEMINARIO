@@ -31,12 +31,13 @@ public class UsuarioService {
     }
 
     public Usuario findByConfirmationToken(String token){ return usuarioRepository.findUsuarioByConfirmationToken(token);}
-
+    public Usuario findByResetPassword(String token){ return usuarioRepository.encontrarUsuarioPorToken(token);}
     public boolean existsByEmail(String email){
         return usuarioRepository.existsByEmail(email);
     }
 
-    
+
+
      @Transactional(readOnly = true)
     public boolean getExisteEmail(String email) {
         return usuarioRepository.existsByEmail(email);

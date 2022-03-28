@@ -162,6 +162,21 @@ public class AuthController {
 
 
         Usuario u = usuarioService.findByEmail(loginUsuario.getEmail());
+
+        if(u==null){
+            return new ResponseEntity(("El correo no existe"), HttpStatus.BAD_REQUEST);
+        }
+
+        Usuario uToken = usuarioService.findByResetPassword(token);
+
+        if(uToken==null){
+            return new ResponseEntity(("El token no está asociado a ningun usuario"), HttpStatus.BAD_REQUEST);
+        }
+
+        if(!u.getEmail().equals(uToken.getEmail())){
+            return new ResponseEntity(("El token se encuentra asociado a otro usuario"), HttpStatus.BAD_REQUEST);
+        }
+
         u.setPassword(passwordEncoder.encode(loginUsuario.getPassword()));
         usuarioService.guardar(u);
 
