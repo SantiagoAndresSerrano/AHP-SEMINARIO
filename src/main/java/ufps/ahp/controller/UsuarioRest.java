@@ -45,6 +45,10 @@ public class UsuarioRest {
                 p.getDescripcion(),descisorDTO.getEmail());
         return ResponseEntity.ok("");
     }
+    @GetMapping
+    public ResponseEntity<?> listar(){
+        return ResponseEntity.ok(usuarioService.listar());
+    }
 
 
 }
