@@ -25,6 +25,11 @@ public class PuntuacionCriterioServicioImp implements PuntuacionCriterioServicio
     }
 
     @Override
+    public List<PuntuacionCriterio> obtenerParesCriterios(String idProblema) {
+        return puntuacionCriterioDAO.obtenerPares(idProblema);
+    }
+
+    @Override
     public PuntuacionCriterio buscar(int idPuntuacionCriterio) {
         return puntuacionCriterioDAO.findById(idPuntuacionCriterio).orElse(null);
     }

@@ -7,18 +7,8 @@ package ufps.ahp.model;
 
 
 import java.io.Serializable;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
+import java.util.Collection;
+import javax.persistence.*;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -48,7 +38,29 @@ public class Criterio implements Serializable {
     @ManyToOne
     private Problema problema;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "criterio1Id")
+    private Collection<PuntuacionCriterio> puntuacionCriterio1;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "criterio2Id")
+    private Collection<PuntuacionCriterio> puntuacionCriterio2;
+
     public Criterio() {
+    }
+
+    public Collection<PuntuacionCriterio> puntuacionCriterio1() {
+        return puntuacionCriterio1;
+    }
+
+    public void setPuntuacionCriterio1(Collection<PuntuacionCriterio> puntuacionCriterio1) {
+        this.puntuacionCriterio1 = puntuacionCriterio1;
+    }
+
+    public Collection<PuntuacionCriterio> puntuacionCriterio2() {
+        return puntuacionCriterio2;
+    }
+
+    public void setPuntuacionCriterio2(Collection<PuntuacionCriterio> puntuacionCriterio2) {
+        this.puntuacionCriterio2 = puntuacionCriterio2;
     }
 
     public Criterio(Integer idCriterio) {

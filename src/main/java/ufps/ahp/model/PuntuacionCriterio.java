@@ -6,6 +6,8 @@ package ufps.ahp.model;
  * and open the template in the editor.
  */
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
@@ -46,14 +48,12 @@ public class PuntuacionCriterio implements Serializable {
     @Basic(optional = false)
     @Column(name = "id_puntuacion_decisor")
     private Integer idPuntuacionDecisor;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "criterio1_id")
-    private int criterio1Id;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "criterio2_id")
-    private int criterio2Id;
+    @JoinColumn(name = "criterio1_id", referencedColumnName = "id_criterio")
+    @ManyToOne(optional = false)
+    private Criterio criterio1Id;
+    @JoinColumn(name = "criterio2_id", referencedColumnName = "id_criterio")
+    @ManyToOne(optional = false)
+    private Criterio criterio2Id;
     @Basic(optional = false)
     @NotNull
     @Column(name = "valor")
@@ -62,6 +62,7 @@ public class PuntuacionCriterio implements Serializable {
     private Collection<Puntuacion> puntuacionCollection;
     @JoinColumn(name = "problema", referencedColumnName = "id_problema")
     @ManyToOne(optional = false)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Problema problema;
 
     public PuntuacionCriterio() {
@@ -71,7 +72,7 @@ public class PuntuacionCriterio implements Serializable {
         this.idPuntuacionDecisor = idPuntuacionDecisor;
     }
 
-    public PuntuacionCriterio(Integer idPuntuacionDecisor, int criterio1Id, int criterio2Id, int valor) {
+    public PuntuacionCriterio(Integer idPuntuacionDecisor, Criterio criterio1Id, Criterio criterio2Id, int valor) {
         this.idPuntuacionDecisor = idPuntuacionDecisor;
         this.criterio1Id = criterio1Id;
         this.criterio2Id = criterio2Id;
@@ -86,19 +87,19 @@ public class PuntuacionCriterio implements Serializable {
         this.idPuntuacionDecisor = idPuntuacionDecisor;
     }
 
-    public int getCriterio1Id() {
+    public Criterio getCriterio1Id() {
         return criterio1Id;
     }
 
-    public void setCriterio1Id(int criterio1Id) {
-        this.criterio1Id = criterio1Id;
-    }
-
-    public int getCriterio2Id() {
+    public Criterio getCriterio2Id() {
         return criterio2Id;
     }
 
-    public void setCriterio2Id(int criterio2Id) {
+    public void setCriterio1Id(Criterio criterio1Id) {
+        this.criterio1Id = criterio1Id;
+    }
+
+    public void setCriterio2Id(Criterio criterio2Id) {
         this.criterio2Id = criterio2Id;
     }
 

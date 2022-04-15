@@ -76,6 +76,13 @@ public class ProblemaRest {
         return ResponseEntity.ok(criterios);
     }
 
+    @GetMapping(path="/criteriosComparados/{idProblema}") // Metodo para obtener los pares a comparar en la puntuacion de criterios
+    public ResponseEntity<?> obtenerParesCriterios(@PathVariable String idProblema){
+        Problema p = problemaService.buscar(idProblema);
+        
+        return ResponseEntity.ok(puntuacionCriterioServicio.obtenerParesCriterios(idProblema));
+    }
+
     @PostMapping(path="/alternativas/{idProblema}")
     public ResponseEntity<?> agregarAlternativasDeProblema(@PathVariable String idProblema, @RequestBody List<Alternativa> alternativas){
         Problema p = problemaService.buscar(idProblema);

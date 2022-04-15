@@ -11,6 +11,7 @@
     <groupId>ufps</groupId>
     <artifactId>ahp</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
     <name>ahp</name>
     <description>ahp</description>
     <properties>
@@ -27,11 +28,7 @@
             <artifactId>spring-boot-starter-mail</artifactId>
             <version>2.5.6</version>
         </dependency>
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-            <version>2.9.2</version>
-        </dependency>
+
 
         <dependency>
             <groupId>io.springfox</groupId>

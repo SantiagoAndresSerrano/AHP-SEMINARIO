@@ -4,8 +4,8 @@
  * and open the template in the editor.
  */
 package ufps.ahp.security.controlador;
-
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -66,6 +66,9 @@ public class AuthController {
     @Autowired
     EmailServiceImp emailServiceImp;
 
+
+    @Value("{uriBackend}")
+    private String uriBackend;
 
     @Autowired
     PasswordResetTokenService passwordResetTokenService;
