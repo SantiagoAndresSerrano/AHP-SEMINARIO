@@ -15,6 +15,7 @@ import ufps.ahp.services.imp.EmailServiceImp;
 
 @RestController
 @RequestMapping("/usuario")
+@CrossOrigin
 public class UsuarioRest {
 
     @Autowired

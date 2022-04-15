@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/problema")
 @Slf4j
 public class ProblemaRest {
