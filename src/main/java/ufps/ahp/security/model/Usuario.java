@@ -119,6 +119,7 @@ public class Usuario implements Serializable {
 //        return passwordResetTokenCollection;
 //    }
 
+
     public void setPasswordResetTokenCollection(Collection<PasswordResetToken> passwordResetTokenCollection) {
         this.passwordResetTokenCollection = passwordResetTokenCollection;
     }
