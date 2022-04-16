@@ -2,6 +2,7 @@ package ufps.ahp.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ufps.ahp.model.Decisor;
@@ -24,6 +25,7 @@ public class UsuarioRest {
     @Autowired
     UsuarioService usuarioService;
 
+
     @Autowired
     EmailServiceImp emailServiceImp;
 
@@ -39,6 +41,18 @@ public class UsuarioRest {
     @Value("${urifrontend}")
     private String urlFrontend;
 
+
+    @GetMapping("/usuarioPorEmail/{email}")
+    public ResponseEntity<?> getUsuarioByEmail(@PathVariable String email){
+
+        Usuario u = usuarioService.findByEmail(email);
+
+        if(u==null){
+            return new ResponseEntity("Email no encontrado",HttpStatus.NOT_FOUND);
+        }
+
+        return ResponseEntity.ok(u);
+    }
 
     @PostMapping("/descisor/{idProblema}")
     public ResponseEntity<?> agregarDescisor(@RequestBody DescisorDTO descisorDTO, @RequestParam String idProblema) throws MessagingException {
